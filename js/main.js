@@ -4,6 +4,10 @@ const button=document.querySelector('.menu-button');const nav=document.querySele
 const bookingOptionsHeading=document.querySelector('#spelningar-title');
 if(bookingOptionsHeading) bookingOptionsHeading.textContent='Från mingel till fullt ös';
 
+// Remove the standalone portrait from the About section.
+const aboutSide=document.querySelector('#om .about-side');
+if(aboutSide) aboutSide.remove();
+
 // Reference logos are included directly in index.html from images/ref.
 // Center them on smaller screens while keeping the desktop layout left aligned.
 const mobileLogoStyle=document.createElement('style');
