@@ -50,3 +50,14 @@ if(bookingForm){
   formspreeScript.defer=true;
   document.head.appendChild(formspreeScript);
 }
+
+// Responsive YouTube gallery for the live section.
+const liveGalleryStyles=document.createElement('link');
+liveGalleryStyles.rel='stylesheet';
+liveGalleryStyles.href='css/live-gallery.css?v=1';
+document.head.appendChild(liveGalleryStyles);
+
+const liveGalleryScript=document.createElement('script');
+liveGalleryScript.src='js/live-gallery.js?v=1';
+liveGalleryScript.defer=true;
+document.head.appendChild(liveGalleryScript);
