@@ -5,3 +5,9 @@ const button=document.querySelector('.menu-button');const nav=document.querySele
 const mobileLogoStyle=document.createElement('style');
 mobileLogoStyle.textContent='@media(max-width:850px){.testimonial-logo{margin-left:auto!important;margin-right:auto!important;object-position:center center!important;}}';
 document.head.appendChild(mobileLogoStyle);
+
+// Extra styling for the quote section with portrait background.
+const quoteStyles=document.createElement('link');
+quoteStyles.rel='stylesheet';
+quoteStyles.href='css/quote.css';
+document.head.appendChild(quoteStyles);
