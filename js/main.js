@@ -12,3 +12,41 @@ const quoteStyles=document.createElement('link');
 quoteStyles.rel='stylesheet';
 quoteStyles.href='css/quote.css?v=4';
 document.head.appendChild(quoteStyles);
+
+// Formspree AJAX integration for the booking form.
+const bookingForm=document.querySelector('#booking-form');
+if(bookingForm){
+  bookingForm.setAttribute('action','https://formspree.io/f/xnpalpgg');
+  bookingForm.setAttribute('method','POST');
+
+  bookingForm.querySelectorAll('input:not([type="hidden"]), select, textarea').forEach(field=>{
+    field.setAttribute('data-fs-field','');
+  });
+
+  const submitButton=bookingForm.querySelector('.form-submit');
+  if(submitButton){
+    submitButton.setAttribute('data-fs-submit-btn','');
+    submitButton.removeAttribute('aria-disabled');
+  }
+
+  const formNote=bookingForm.querySelector('.form-note');
+  if(formNote) formNote.textContent='Fyll i formuläret och skicka din bokningsförfrågan. Jag återkommer så snart jag kan.';
+
+  const status=document.createElement('div');
+  status.className='form-status';
+  status.setAttribute('aria-live','polite');
+  status.innerHTML='<div class="form-success" data-fs-success>Tack! Din bokningsförfrågan är skickad. Jag återkommer så snart jag kan.</div><div class="form-error" data-fs-error>Något gick fel. Försök igen eller kontakta mig direkt.</div>';
+  bookingForm.insertBefore(status,submitButton||null);
+
+  const formStatusStyle=document.createElement('style');
+  formStatusStyle.textContent='.form-status{grid-column:1/-1}.form-success,.form-error{display:none;margin:0 0 18px;padding:14px 16px;border-radius:10px;font-size:.95rem;line-height:1.45}.form-success:not(:empty){background:#eef7ee;border:1px solid #bdd8bd;color:#254d25}.form-error:not(:empty){background:#fff1f0;border:1px solid #e3b8b4;color:#7a2720}[data-fs-success]:not([hidden]),[data-fs-error]:not([hidden]){display:block}.form-submit:disabled{opacity:.65;cursor:wait;transform:none;box-shadow:none}';
+  document.head.appendChild(formStatusStyle);
+
+  window.formspree=window.formspree||function(){(window.formspree.q=window.formspree.q||[]).push(arguments);};
+  window.formspree('initForm',{formElement:'#booking-form',formId:'xnpalpgg'});
+
+  const formspreeScript=document.createElement('script');
+  formspreeScript.src='https://unpkg.com/@formspree/ajax@1';
+  formspreeScript.defer=true;
+  document.head.appendChild(formspreeScript);
+}
