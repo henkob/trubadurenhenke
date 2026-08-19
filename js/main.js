@@ -7,7 +7,8 @@ mobileLogoStyle.textContent='@media(max-width:850px){.testimonial-logo{margin-le
 document.head.appendChild(mobileLogoStyle);
 
 // Extra styling for the quote section with portrait background.
+// Version query avoids stale CSS in Safari/iPhone caches.
 const quoteStyles=document.createElement('link');
 quoteStyles.rel='stylesheet';
-quoteStyles.href='css/quote.css';
+quoteStyles.href='css/quote.css?v=4';
 document.head.appendChild(quoteStyles);
