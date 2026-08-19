@@ -35,11 +35,11 @@ if(bookingForm){
   const status=document.createElement('div');
   status.className='form-status';
   status.setAttribute('aria-live','polite');
-  status.innerHTML='<div class="form-success" data-fs-success>Tack! Din bokningsförfrågan är skickad. Jag återkommer så snart jag kan.</div><div class="form-error" data-fs-error>Något gick fel. Försök igen eller kontakta mig direkt.</div>';
+  status.innerHTML='<div class="form-success" data-fs-success hidden>Tack! Din bokningsförfrågan är skickad. Jag återkommer så snart jag kan.</div><div class="form-error" data-fs-error hidden>Något gick fel. Försök igen eller kontakta mig direkt.</div>';
   bookingForm.insertBefore(status,submitButton||null);
 
   const formStatusStyle=document.createElement('style');
-  formStatusStyle.textContent='.form-status{grid-column:1/-1}.form-success,.form-error{display:none;margin:0 0 18px;padding:14px 16px;border-radius:10px;font-size:.95rem;line-height:1.45}.form-success:not(:empty){background:#eef7ee;border:1px solid #bdd8bd;color:#254d25}.form-error:not(:empty){background:#fff1f0;border:1px solid #e3b8b4;color:#7a2720}[data-fs-success]:not([hidden]),[data-fs-error]:not([hidden]){display:block}.form-submit:disabled{opacity:.65;cursor:wait;transform:none;box-shadow:none}';
+  formStatusStyle.textContent='.form-status{grid-column:1/-1}.form-success,.form-error{margin:0 0 18px;padding:14px 16px;border-radius:10px;font-size:.95rem;line-height:1.45}.form-success{background:#eef7ee;border:1px solid #bdd8bd;color:#254d25}.form-error{background:#fff1f0;border:1px solid #e3b8b4;color:#7a2720}.form-success[hidden],.form-error[hidden]{display:none!important}.form-submit:disabled{opacity:.65;cursor:wait;transform:none;box-shadow:none}';
   document.head.appendChild(formStatusStyle);
 
   window.formspree=window.formspree||function(){(window.formspree.q=window.formspree.q||[]).push(arguments);};
