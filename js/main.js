@@ -11,6 +11,11 @@ document.head.appendChild(gaScript);
 
 const button=document.querySelector('.menu-button');const nav=document.querySelector('#main-nav');if(button&&nav){button.addEventListener('click',()=>{const open=nav.classList.toggle('open');button.setAttribute('aria-expanded',String(open));});nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');button.setAttribute('aria-expanded','false');}));}const year=document.querySelector('#year');if(year)year.textContent=new Date().getFullYear();
 
+const introHeading=document.querySelector('.intro h2');
+if(introHeading) introHeading.textContent='Musiken anpassas efter tillfället';
+const introLead=document.querySelector('.intro .section-lead');
+if(introLead) introLead.textContent='Ingen spelning är den andra lik. Jag läser av publiken och blandar välkända låtar, svenska favoriter, rock, pop, allsång och önskemål efter stämningen.';
+
 const bookingOptionsHeading=document.querySelector('#spelningar-title');
 if(bookingOptionsHeading) bookingOptionsHeading.textContent='Från mingel till fullt ös';
 
