@@ -11,6 +11,34 @@ document.head.appendChild(gaScript);
 
 const button=document.querySelector('.menu-button');const nav=document.querySelector('#main-nav');if(button&&nav){button.addEventListener('click',()=>{const open=nav.classList.toggle('open');button.setAttribute('aria-expanded',String(open));});nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');button.setAttribute('aria-expanded','false');}));}const year=document.querySelector('#year');if(year)year.textContent=new Date().getFullYear();
 
+// Make hero autoplay reliable in Safari/iPhone and after cached deployments.
+const heroVideos=document.querySelectorAll('.hero-video');
+heroVideos.forEach(video=>{
+  video.muted=true;
+  video.defaultMuted=true;
+  video.loop=true;
+  video.playsInline=true;
+  video.setAttribute('muted','');
+  video.setAttribute('playsinline','');
+  video.setAttribute('webkit-playsinline','');
+  video.preload='auto';
+  const source=video.querySelector('source');
+  if(source&&source.src&&!source.src.includes('v=hero2')){
+    const url=new URL(source.src,window.location.href);
+    url.searchParams.set('v','hero2');
+    source.src=url.href;
+    video.load();
+  }
+  const tryPlay=()=>{
+    const p=video.play();
+    if(p&&typeof p.catch==='function')p.catch(()=>{});
+  };
+  if(video.readyState>=2)tryPlay();
+  else video.addEventListener('canplay',tryPlay,{once:true});
+  window.addEventListener('pageshow',tryPlay);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)tryPlay();});
+});
+
 const heroLead=document.querySelector('.hero .lead');
 if(heroLead) heroLead.textContent='Från skönt mingel till allsång och fullt ös. Livemusik för fest, afterski, after beach, företag, pub och restaurang.';
 
