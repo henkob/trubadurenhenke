@@ -19,6 +19,9 @@ if(introLead) introLead.textContent='Ingen spelning är den andra lik. Jag läse
 const bookingOptionsHeading=document.querySelector('#spelningar-title');
 if(bookingOptionsHeading) bookingOptionsHeading.textContent='Från mingel till fullt ös';
 
+const benefitsSection=document.querySelector('.benefits');
+if(benefitsSection) benefitsSection.remove();
+
 const aboutSide=document.querySelector('#om .about-side');
 if(aboutSide) aboutSide.remove();
 
