@@ -17,13 +17,16 @@ if(bookingOptionsHeading) bookingOptionsHeading.textContent='Från mingel till f
 const aboutSide=document.querySelector('#om .about-side');
 if(aboutSide) aboutSide.remove();
 
-// Updated testimonial wording.
+// Updated testimonial wording and Majkens logo.
 document.querySelectorAll('.testimonial').forEach(testimonial=>{
   const name=testimonial.querySelector('figcaption strong')?.textContent.trim();
   const quote=testimonial.querySelector('blockquote');
-  if(!quote)return;
-  if(name==='Eddy Estigarribia') quote.textContent='”Vi har haft ett långt och mycket gott samarbete med Henke. Han är en fantastisk sångare och entertainer som levererar varje gång. Vi har samarbetat i över ett decennium och hoppas ha honom hos oss länge till.”';
-  if(name==='Markus Pettersson') quote.textContent='”Henkes spelningar hos oss på Fårö har varit episka. Varje år ser vi fram emot att han ska komma tillbaka till oss, något som blivit en tradition sedan flera år tillbaka.”';
+  if(quote&&name==='Eddy Estigarribia') quote.textContent='”Vi har haft ett långt och mycket gott samarbete med Henke. Han är en fantastisk sångare och entertainer som levererar varje gång. Vi har samarbetat i över ett decennium och hoppas ha honom hos oss länge till.”';
+  if(name==='Markus Pettersson'){
+    if(quote) quote.textContent='”Henkes spelningar hos oss på Fårö har varit episka. Varje år ser vi fram emot att han ska komma tillbaka till oss, något som blivit en tradition sedan flera år tillbaka.”';
+    const logo=testimonial.querySelector('.testimonial-logo');
+    if(logo) logo.src='images/ref/Majkens-v2_vit_plain_2-495x374-2.png';
+  }
 });
 
 const mobileLogoStyle=document.createElement('style');
