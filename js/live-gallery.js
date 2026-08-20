@@ -15,7 +15,7 @@
     <div class="section-heading">
       <p class="eyebrow">Se mig live</p>
       <h2>Så här kan det låta</h2>
-      <p>Afterski, restaurang, event och after sail. Här får du en snabb känsla för hur det kan låta och se ut när jag spelar live.</p>
+      <p>Afterski, restaurang, event och after sail. Här får du en känsla för hur det kan låta och se ut när jag spelar live.</p>
     </div>
     <div class="video-grid" aria-label="Livevideor">
       ${videos.map(v=>`
