@@ -11,19 +11,38 @@ document.head.appendChild(gaScript);
 
 const button=document.querySelector('.menu-button');const nav=document.querySelector('#main-nav');if(button&&nav){button.addEventListener('click',()=>{const open=nav.classList.toggle('open');button.setAttribute('aria-expanded',String(open));});nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');button.setAttribute('aria-expanded','false');}));}const year=document.querySelector('#year');if(year)year.textContent=new Date().getFullYear();
 
+const heroLead=document.querySelector('.hero .lead');
+if(heroLead) heroLead.textContent='Från skönt mingel till allsång och fullt ös. Livemusik för fest, afterski, after beach, företag, pub och restaurang.';
+
+const introEyebrow=document.querySelector('.intro .eyebrow');
+if(introEyebrow) introEyebrow.textContent='Varje spelning är unik';
 const introHeading=document.querySelector('.intro h2');
 if(introHeading) introHeading.textContent='Musiken anpassas efter tillfället';
 const introLead=document.querySelector('.intro .section-lead');
-if(introLead) introLead.textContent='Ingen spelning är den andra lik. Jag läser av publiken och blandar välkända låtar, svenska favoriter, rock, pop, allsång och önskemål efter stämningen.';
+if(introLead) introLead.textContent='Jag läser av publiken och anpassar låtval, tempo och upplägg efter stämningen. Från skön bakgrundsmusik till allsång och dans.';
 
 const bookingOptionsHeading=document.querySelector('#spelningar-title');
 if(bookingOptionsHeading) bookingOptionsHeading.textContent='Från mingel till fullt ös';
 
+document.querySelectorAll('#spelningar .card').forEach(card=>{
+  const title=card.querySelector('h3')?.textContent.trim();
+  const text=card.querySelector('p');
+  if(title==='Pub & restaurang'&&text) text.textContent='Livemusik som skapar stämning, håller kvar gästerna och kan växla upp när det tar fart.';
+  if(title==='Musikquiz'&&text) text.textContent='Livequiz där låtar, frågor och musik blandas till en aktivitet som får hela sällskapet med.';
+});
+
 const benefitsSection=document.querySelector('.benefits');
 if(benefitsSection) benefitsSection.remove();
 
+const testimonialsIntro=document.querySelector('#referenser .section-heading p:last-child');
+if(testimonialsIntro) testimonialsIntro.textContent='Några av de restauranger, hotell och eventarrangörer som har bokat mig genom åren.';
+
 const aboutSide=document.querySelector('#om .about-side');
 if(aboutSide) aboutSide.remove();
+const aboutCopy=document.querySelector('#om .about-copy');
+if(aboutCopy){
+  aboutCopy.innerHTML='<p class="eyebrow">Om Henke</p><h2>Musiken har hängt med sedan jag var 12</h2><p>Jag har hållit på med musik nästan hela livet. Som 12-åring startade jag mitt första band och 1987 började jag spela som trubadur. Sedan dess har det blivit tusentals timmar på scen.</p><p>På 90-talet startade jag partybandet <strong>Ramalama Tubsox</strong> tillsammans med en trubadurkollega. Det blev många år av spelningar och turnéer i Sverige, Norge och Alperna, inte minst på afterski där samspelet med publiken blev en viktig del av mitt sätt att uppträda.</p><p>I dag spelar jag både solo som Trubadur Henke och med partycoverbandet <strong>HenkoBenko</strong>, på allt från pubar och privata fester till företagsevent, afterski, after beach och större arrangemang.</p><p>Med HenkoBenko har jag också fått spela tillsammans med artister som <strong>David Lindgren, Méndez, Andreas Lundstedt, Nordman och Nanne Grönvall</strong>.</p><h3>Publiken är fortfarande det viktigaste</h3><p>Det är mötet med publiken som gör spelningen. Jag gillar när det inte går att förutse exakt hur det kommer att utvecklas. Ibland passar musiken bäst i bakgrunden, ibland står hela rummet och sjunger med. Att känna när det är dags att växla upp är en stor del av jobbet.</p>';
+}
 
 // Updated testimonial wording and Majkens logo.
 document.querySelectorAll('.testimonial').forEach(testimonial=>{
@@ -36,6 +55,9 @@ document.querySelectorAll('.testimonial').forEach(testimonial=>{
     if(logo) logo.src='images/ref/Majkens-v2_vit_plain_2-495x374-2.png';
   }
 });
+
+const contactLead=document.querySelector('#kontakt .section-lead');
+if(contactLead) contactLead.textContent='Berätta när och var ni vill ha musik och vilken typ av arrangemang det gäller. Jag återkommer med förslag på upplägg och pris.';
 
 const mobileLogoStyle=document.createElement('style');
 mobileLogoStyle.textContent='@media(max-width:850px){.testimonial-logo{margin-left:auto!important;margin-right:auto!important;object-position:center center!important;}}';
