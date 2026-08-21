@@ -46,11 +46,11 @@
     lastTrigger=trigger;
     const id=trigger.dataset.videoId;
     const title=trigger.dataset.videoTitle;
-    frameWrap.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="${title}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
     modalTitle.textContent=title;
     modal.hidden=false;
     document.body.classList.add('video-modal-open');
-    closeButton.focus();
+    frameWrap.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&enablejsapi=1" title="${title}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen playsinline></iframe>`;
+    closeButton.focus({preventScroll:true});
   }
 
   function closeVideo(){
