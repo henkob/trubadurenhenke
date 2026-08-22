@@ -3,10 +3,10 @@
   if(!liveSection)return;
 
   const videos=[
-    {id:'U6FW0fBWcvg',file:'video/Promo/Angels.mp4',song:'Angels',place:'Brasserie Stadsparken · Västerås'},
+    {id:'U6FW0fBWcvg',file:'video/Promo/99AC4C1A-21B4-4ADA-8105-5E9C39D6624C%202.mp4',song:'Angels',place:'Brasserie Stadsparken · Västerås'},
     {id:'Noi6hNusP1w',file:'video/Promo/Yellow%20submarine.mp4',song:'Yellow Submarine',place:'Afterski · Åre'},
     {id:'8xrqnT9fWfk',file:'video/Promo/Sa%CC%88g%20mig%20vad%20du%20sta%CC%8Ar.mp4',song:'Säg mig var du står',place:'Afterski · Åre'},
-    {id:'Ey3ZzxWfGfQ',file:'video/Promo/99AC4C1A-21B4-4ADA-8105-5E9C39D6624C%202.mp4',song:'I Want It That Way',place:'Event · Vildmarkshotellet'},
+    {id:'Ey3ZzxWfGfQ',file:'video/Promo/Angels.mp4',song:'I Want It That Way',place:'Event · Vildmarkshotellet'},
     {id:'kUhpfD7tnq8',file:'video/Promo/I%E2%80%99m%20so%20happy.mp4',song:"I'm So Happy",place:'Afterski · Gressoney, Italien'},
     {id:'00vtplmnDv0',file:'video/Promo/What%E2%80%99s%20going%20on.mp4',song:"What's Going On",place:'After sail · Gran Canaria'}
   ];
