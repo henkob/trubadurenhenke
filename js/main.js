@@ -27,7 +27,7 @@ const contactLead=document.querySelector('#kontakt .section-lead');if(contactLea
 const mobileLogoStyle=document.createElement('style');mobileLogoStyle.textContent='@media(max-width:850px){.testimonial-logo{margin-left:auto!important;margin-right:auto!important;object-position:center center!important;}}';document.head.appendChild(mobileLogoStyle);
 const quoteStyles=document.createElement('link');quoteStyles.rel='stylesheet';quoteStyles.href='css/quote.css?v=4';document.head.appendChild(quoteStyles);
 
-const eyebrowSizeStyle=document.createElement('style');eyebrowSizeStyle.textContent='.section .eyebrow{font-size:.92rem;letter-spacing:.14em;margin-bottom:14px}@media(max-width:520px){.section .eyebrow{font-size:.86rem;letter-spacing:.13em}}';document.head.appendChild(eyebrowSizeStyle);
+const eyebrowSizeStyle=document.createElement('style');eyebrowSizeStyle.textContent='.section .eyebrow{font-size:1.12rem!important;line-height:1.25;letter-spacing:.12em;margin-bottom:16px}@media(max-width:520px){.section .eyebrow{font-size:1rem!important;letter-spacing:.11em;margin-bottom:13px}}';document.head.appendChild(eyebrowSizeStyle);
 
 const bookingForm=document.querySelector('#booking-form');
 if(bookingForm){
