@@ -3,12 +3,12 @@
   if(!liveSection)return;
 
   const videos=[
-    {id:'U6FW0fBWcvg',song:'Angels',place:'Brasserie Stadsparken · Västerås'},
-    {id:'Noi6hNusP1w',song:'Yellow Submarine',place:'Afterski · Åre'},
-    {id:'8xrqnT9fWfk',song:'Säg mig var du står',place:'Afterski · Åre'},
-    {id:'Ey3ZzxWfGfQ',song:'I Want It That Way',place:'Event · Vildmarkshotellet'},
-    {id:'kUhpfD7tnq8',song:"I'm So Happy",place:'Afterski · Gressoney, Italien'},
-    {id:'00vtplmnDv0',song:"What's Going On",place:'After sail · Gran Canaria'}
+    {id:'U6FW0fBWcvg',file:'video/Promo/0F1055DB-C877-4FDE-BC7A-737C90F97949%202.mp4',song:'Angels',place:'Brasserie Stadsparken · Västerås'},
+    {id:'Noi6hNusP1w',file:'video/Promo/3F0E49BA-FA29-48F4-8786-527D0EE47EBD%202.mp4',song:'Yellow Submarine',place:'Afterski · Åre'},
+    {id:'8xrqnT9fWfk',file:'video/Promo/6A2DBF38-2E0C-40B1-9100-D0F7272A7352%202.mp4',song:'Säg mig var du står',place:'Afterski · Åre'},
+    {id:'Ey3ZzxWfGfQ',file:'video/Promo/93384B1F-163B-4B71-A330-5AEEEEA9A80A.mp4',song:'I Want It That Way',place:'Event · Vildmarkshotellet'},
+    {id:'kUhpfD7tnq8',file:'video/Promo/957455FF-FA5A-4770-8C4E-255183A3D6C6%202.mp4',song:"I'm So Happy",place:'Afterski · Gressoney, Italien'},
+    {id:'00vtplmnDv0',file:'video/Promo/99AC4C1A-21B4-4ADA-8105-5E9C39D6624C%202.mp4',song:"What's Going On",place:'After sail · Gran Canaria'}
   ];
 
   liveSection.innerHTML=`
@@ -20,7 +20,7 @@
     <div class="video-grid" aria-label="Livevideor">
       ${videos.map(v=>`
         <figure class="video-card">
-          <button class="video-trigger" type="button" data-video-id="${v.id}" data-video-title="${v.song} · ${v.place}" aria-label="Spela ${v.song}, ${v.place}">
+          <button class="video-trigger" type="button" data-video-file="${v.file}" data-video-title="${v.song} · ${v.place}" aria-label="Spela ${v.song}, ${v.place}">
             <img class="video-thumb" src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="" loading="lazy">
             <span class="video-shade" aria-hidden="true"></span>
             <span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
@@ -44,16 +44,20 @@
 
   function openVideo(trigger){
     lastTrigger=trigger;
-    const id=trigger.dataset.videoId;
+    const file=trigger.dataset.videoFile;
     const title=trigger.dataset.videoTitle;
     modalTitle.textContent=title;
     modal.hidden=false;
     document.body.classList.add('video-modal-open');
-    frameWrap.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&enablejsapi=1" title="${title}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen playsinline></iframe>`;
+    frameWrap.innerHTML=`<video src="${file}" title="${title}" controls autoplay playsinline preload="metadata"></video>`;
+    const player=frameWrap.querySelector('video');
+    if(player){const playPromise=player.play();if(playPromise&&typeof playPromise.catch==='function')playPromise.catch(()=>{});}
     closeButton.focus({preventScroll:true});
   }
 
   function closeVideo(){
+    const player=frameWrap.querySelector('video');
+    if(player){player.pause();player.removeAttribute('src');player.load();}
     modal.hidden=true;
     frameWrap.innerHTML='';
     modalTitle.textContent='';
