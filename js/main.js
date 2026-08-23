@@ -6,6 +6,10 @@ gtag('js',new Date());
 gtag('config',gaMeasurementId);
 const gaScript=document.createElement('script');gaScript.async=true;gaScript.src=`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`;document.head.appendChild(gaScript);
 
+// GA4 interaction tracking
+const trackEvent=(name,params={})=>{if(typeof gtag==='function')gtag('event',name,params);};
+document.addEventListener('click',event=>{const link=event.target.closest('a,button');if(!link)return;const text=(link.textContent||link.getAttribute('aria-label')||'').trim().replace(/\s+/g,' ').slice(0,100);if(link.closest('.video-trigger')||link.closest('.video-modal'))return;if(link.matches('a[href^="#"]'))trackEvent('section_click',{link_text:text,section_target:link.getAttribute('href')});if(link.matches('a[href^="mailto:"]'))trackEvent('contact_click',{contact_type:'email',link_text:text});if(link.matches('a[href^="tel:"]'))trackEvent('contact_click',{contact_type:'phone',link_text:text});});
+
 const button=document.querySelector('.menu-button');const nav=document.querySelector('#main-nav');if(button&&nav){button.addEventListener('click',()=>{const open=nav.classList.toggle('open');button.setAttribute('aria-expanded',String(open));});nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');button.setAttribute('aria-expanded','false');}));}const year=document.querySelector('#year');if(year)year.textContent=new Date().getFullYear();
 
 const heroVideos=document.querySelectorAll('.hero-video');heroVideos.forEach(video=>{video.muted=true;video.defaultMuted=true;video.loop=true;video.playsInline=true;video.setAttribute('muted','');video.setAttribute('playsinline','');video.setAttribute('webkit-playsinline','');video.preload='auto';const source=video.querySelector('source');if(source&&source.src&&!source.src.includes('v=hero2')){const url=new URL(source.src,window.location.href);url.searchParams.set('v','hero2');source.src=url.href;video.load();}const tryPlay=()=>{const p=video.play();if(p&&typeof p.catch==='function')p.catch(()=>{});};if(video.readyState>=2)tryPlay();else video.addEventListener('canplay',tryPlay,{once:true});window.addEventListener('pageshow',tryPlay);document.addEventListener('visibilitychange',()=>{if(!document.hidden)tryPlay();});});
@@ -34,6 +38,9 @@ if(bookingForm){
   bookingForm.setAttribute('action','https://formspree.io/f/xnpalpgg');
   bookingForm.setAttribute('method','POST');
   bookingForm.setAttribute('novalidate','');
+  let bookingStarted=false;
+  const markBookingStart=()=>{if(bookingStarted)return;bookingStarted=true;trackEvent('booking_start',{form_id:'booking-form'});};
+  bookingForm.addEventListener('input',markBookingStart,{once:true});bookingForm.addEventListener('change',markBookingStart,{once:true});
 
   const date=bookingForm.querySelector('#date');
   if(date){date.required=true;const label=bookingForm.querySelector('label[for="date"]');if(label)label.innerHTML='Datum för spelningen <span aria-hidden="true">*</span>';}
@@ -67,15 +74,16 @@ if(bookingForm){
   bookingForm.addEventListener('submit',async event=>{
     event.preventDefault();
     const success=status.querySelector('.form-success');const error=status.querySelector('.form-error');success.hidden=true;error.hidden=true;
-    if(!validate())return;
+    if(!validate()){trackEvent('booking_validation_error',{form_id:'booking-form'});return;}
     if(submitButton){submitButton.disabled=true;submitButton.textContent='Skickar…';}
     try{
       const response=await fetch(bookingForm.action,{method:'POST',body:new FormData(bookingForm),headers:{Accept:'application/json'}});
       if(!response.ok)throw new Error('Formspree request failed');
-      bookingForm.reset();fields.forEach(clearFieldError);success.hidden=false;status.focus({preventScroll:true});status.scrollIntoView({behavior:'smooth',block:'center'});
-    }catch(err){error.hidden=false;status.focus({preventScroll:true});status.scrollIntoView({behavior:'smooth',block:'center'});}
+      trackEvent('booking_submit',{form_id:'booking-form',event_type:eventType?.value||''});
+      bookingForm.reset();bookingStarted=false;fields.forEach(clearFieldError);success.hidden=false;status.focus({preventScroll:true});status.scrollIntoView({behavior:'smooth',block:'center'});
+    }catch(err){trackEvent('booking_error',{form_id:'booking-form'});error.hidden=false;status.focus({preventScroll:true});status.scrollIntoView({behavior:'smooth',block:'center'});}
     finally{if(submitButton){submitButton.disabled=false;submitButton.textContent='Skicka förfrågan';}}
   });
 }
 
-const liveGalleryStyles=document.createElement('link');liveGalleryStyles.rel='stylesheet';liveGalleryStyles.href='css/live-gallery.css?v=1';document.head.appendChild(liveGalleryStyles);const liveGalleryScript=document.createElement('script');liveGalleryScript.src='js/live-gallery.js?v=2';liveGalleryScript.defer=true;document.head.appendChild(liveGalleryScript);
+const liveGalleryStyles=document.createElement('link');liveGalleryStyles.rel='stylesheet';liveGalleryStyles.href='css/live-gallery.css?v=2';document.head.appendChild(liveGalleryStyles);const liveGalleryScript=document.createElement('script');liveGalleryScript.src='js/live-gallery.js?v=4';liveGalleryScript.defer=true;document.head.appendChild(liveGalleryScript);
