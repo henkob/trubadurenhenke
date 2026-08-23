@@ -11,6 +11,8 @@
     {id:'00vtplmnDv0',file:'video/Promo/What%E2%80%99s%20going%20on.mp4',song:"What's Going On",place:'After sail · Gran Canaria'}
   ];
 
+  const track=(name,params={})=>{if(typeof window.gtag==='function')window.gtag('event',name,params);};
+
   liveSection.innerHTML=`
     <div class="section-heading">
       <p class="eyebrow">Se mig live</p>
@@ -20,7 +22,7 @@
     <div class="video-grid" aria-label="Livevideor">
       ${videos.map(v=>`
         <figure class="video-card">
-          <button class="video-trigger" type="button" data-video-file="${v.file}" data-video-title="${v.song} · ${v.place}" aria-label="Spela ${v.song}, ${v.place}">
+          <button class="video-trigger" type="button" data-video-file="${v.file}" data-video-song="${v.song}" data-video-place="${v.place}" data-video-title="${v.song} · ${v.place}" aria-label="Spela ${v.song}, ${v.place}">
             <img class="video-thumb" src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="" loading="lazy">
             <span class="video-shade" aria-hidden="true"></span>
             <span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
@@ -41,6 +43,18 @@
   const modalTitle=modal.querySelector('.video-modal-title');
   const closeButton=modal.querySelector('.video-close');
   let lastTrigger=null;
+  let currentPlayer=null;
+  let progressSent=new Set();
+  let started=false;
+
+  function videoParams(player){
+    return {video_title:lastTrigger?.dataset.videoSong||'',video_location:lastTrigger?.dataset.videoPlace||'',video_file:lastTrigger?.dataset.videoFile||'',video_duration:Math.round(player?.duration||0)};
+  }
+
+  function reportWatchTime(player,reason){
+    if(!player||!started)return;
+    track('video_watch_time',{...videoParams(player),watch_time_seconds:Math.round(player.currentTime||0),video_percent:player.duration?Math.round((player.currentTime/player.duration)*100):0,stop_reason:reason});
+  }
 
   function openVideo(trigger){
     lastTrigger=trigger;
@@ -51,13 +65,20 @@
     document.body.classList.add('video-modal-open');
     frameWrap.innerHTML=`<video src="${file}" title="${title}" controls autoplay playsinline preload="metadata"></video>`;
     const player=frameWrap.querySelector('video');
-    if(player){const playPromise=player.play();if(playPromise&&typeof playPromise.catch==='function')playPromise.catch(()=>{});}
+    currentPlayer=player;progressSent=new Set();started=false;
+    if(player){
+      player.addEventListener('play',()=>{if(!started){started=true;track('video_start',videoParams(player));}},{once:true});
+      player.addEventListener('timeupdate',()=>{if(!player.duration)return;const pct=(player.currentTime/player.duration)*100;[25,50,75].forEach(mark=>{if(pct>=mark&&!progressSent.has(mark)){progressSent.add(mark);track('video_progress',{...videoParams(player),video_percent:mark,watch_time_seconds:Math.round(player.currentTime)});}});});
+      player.addEventListener('ended',()=>{progressSent.add(100);track('video_complete',{...videoParams(player),video_percent:100,watch_time_seconds:Math.round(player.duration||player.currentTime||0)});started=false;});
+      const playPromise=player.play();if(playPromise&&typeof playPromise.catch==='function')playPromise.catch(()=>{});
+    }
     closeButton.focus({preventScroll:true});
   }
 
   function closeVideo(){
-    const player=frameWrap.querySelector('video');
-    if(player){player.pause();player.removeAttribute('src');player.load();}
+    const player=currentPlayer||frameWrap.querySelector('video');
+    if(player){reportWatchTime(player,'close');player.pause();player.removeAttribute('src');player.load();}
+    currentPlayer=null;started=false;
     modal.hidden=true;
     frameWrap.innerHTML='';
     modalTitle.textContent='';
@@ -69,4 +90,5 @@
   closeButton.addEventListener('click',closeVideo);
   modal.addEventListener('click',event=>{if(event.target===modal)closeVideo();});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!modal.hidden)closeVideo();});
+  window.addEventListener('pagehide',()=>{if(currentPlayer&&!currentPlayer.ended)reportWatchTime(currentPlayer,'page_exit');});
 })();
