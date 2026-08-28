@@ -3,12 +3,12 @@
   if(!liveSection)return;
 
   const videos=[
-    {id:'U6FW0fBWcvg',file:'video/Promo/99AC4C1A-21B4-4ADA-8105-5E9C39D6624C%202.mp4',song:'Angels',place:'Brasserie Stadsparken · Västerås'},
-    {id:'Noi6hNusP1w',file:'video/Promo/Yellow%20submarine.mp4',song:'Yellow Submarine',place:'Afterski · Åre'},
-    {id:'8xrqnT9fWfk',file:'video/Promo/Sa%CC%88g%20mig%20vad%20du%20sta%CC%8Ar.mp4',song:'Säg mig var du står',place:'Afterski · Åre'},
-    {id:'Ey3ZzxWfGfQ',file:'video/Promo/Angels.mp4',song:'I Want It That Way',place:'Event · Vildmarkshotellet'},
-    {id:'kUhpfD7tnq8',file:'video/Promo/I%E2%80%99m%20so%20happy.mp4',song:"I'm So Happy",place:'Afterski · Gressoney, Italien'},
-    {id:'00vtplmnDv0',file:'video/Promo/What%E2%80%99s%20going%20on.mp4',song:"What's Going On",place:'After sail · Gran Canaria'}
+    {file:'video/Promo/99AC4C1A-21B4-4ADA-8105-5E9C39D6624C%202.mp4',thumb:'video/Promo/Thumbs/Angels.jpeg',song:'Angels',place:'Brasserie Stadsparken · Västerås'},
+    {file:'video/Promo/Yellow%20submarine.mp4',thumb:'video/Promo/Thumbs/Yellow%20submarine.jpeg',song:'Yellow Submarine',place:'Afterski · Åre'},
+    {file:'video/Promo/Sa%CC%88g%20mig%20vad%20du%20sta%CC%8Ar.mp4',thumb:'video/Promo/Thumbs/Sa%CC%88g%20mig%20vad%20du%20sta%CC%8Ar.jpeg',song:'Säg mig var du står',place:'Afterski · Åre'},
+    {file:'video/Promo/Angels.mp4',thumb:'video/Promo/Thumbs/I%20want%20IT%20That%20Way2.jpeg',song:'I Want It That Way',place:'Event · Vildmarkshotellet'},
+    {file:'video/Promo/I%E2%80%99m%20so%20happy.mp4',thumb:'video/Promo/Thumbs/%E2%80%99m%20so%20happy.jpeg',song:"I'm So Happy",place:'Afterski · Gressoney, Italien'},
+    {file:'video/Promo/What%E2%80%99s%20going%20on.mp4',thumb:'video/Promo/Thumbs/Whats%20going%20on.jpeg',song:"What's Going On",place:'After sail · Gran Canaria'}
   ];
 
   const track=(name,params={})=>{if(typeof window.gtag==='function')window.gtag('event',name,params);};
@@ -23,7 +23,7 @@
       ${videos.map(v=>`
         <figure class="video-card">
           <button class="video-trigger" type="button" data-video-file="${v.file}" data-video-song="${v.song}" data-video-place="${v.place}" data-video-title="${v.song} · ${v.place}" aria-label="Spela ${v.song}, ${v.place}">
-            <img class="video-thumb" src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="" loading="lazy">
+            <img class="video-thumb" src="${v.thumb}" alt="" loading="lazy">
             <span class="video-shade" aria-hidden="true"></span>
             <span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
             <span class="video-meta"><span class="video-song">${v.song}</span><span class="video-place">${v.place}</span></span>
