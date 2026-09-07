@@ -1,11 +1,3 @@
-// Google Analytics 4
-const gaMeasurementId='G-N0619NSN9N';
-window.dataLayer=window.dataLayer||[];
-function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());
-gtag('config',gaMeasurementId);
-const gaScript=document.createElement('script');gaScript.async=true;gaScript.src=`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`;document.head.appendChild(gaScript);
-
 // GA4 interaction tracking
 const trackEvent=(name,params={})=>{if(typeof gtag==='function')gtag('event',name,params);};
 document.addEventListener('click',event=>{const link=event.target.closest('a,button');if(!link)return;const text=(link.textContent||link.getAttribute('aria-label')||'').trim().replace(/\s+/g,' ').slice(0,100);if(link.closest('.video-trigger')||link.closest('.video-modal'))return;if(link.matches('a[href^="#"]'))trackEvent('section_click',{link_text:text,section_target:link.getAttribute('href')});if(link.matches('a[href^="mailto:"]'))trackEvent('contact_click',{contact_type:'email',link_text:text});if(link.matches('a[href^="tel:"]'))trackEvent('contact_click',{contact_type:'phone',link_text:text});});
@@ -89,4 +81,4 @@ if(bookingForm){
   });
 }
 
-const liveGalleryStyles=document.createElement('link');liveGalleryStyles.rel='stylesheet';liveGalleryStyles.href='css/live-gallery.css?v=2';document.head.appendChild(liveGalleryStyles);const liveGalleryScript=document.createElement('script');liveGalleryScript.src='js/live-gallery.js?v=4';liveGalleryScript.defer=true;document.head.appendChild(liveGalleryScript);
+const liveGalleryStyles=document.createElement('link');liveGalleryStyles.rel='stylesheet';liveGalleryStyles.href='css/live-gallery.css?v=3';document.head.appendChild(liveGalleryStyles);const liveGalleryScript=document.createElement('script');liveGalleryScript.src='js/live-gallery.js?v=5';liveGalleryScript.defer=true;document.head.appendChild(liveGalleryScript);
